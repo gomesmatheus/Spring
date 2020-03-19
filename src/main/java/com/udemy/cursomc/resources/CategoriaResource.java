@@ -1,5 +1,7 @@
 package com.udemy.cursomc.resources;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -16,6 +18,12 @@ public class CategoriaResource {
 
 	@Autowired
 	private CategoriaService service;
+
+	@RequestMapping(method = RequestMethod.GET)
+	public ResponseEntity<?> find(){
+		List<Categoria> obj = service.buscar();
+		return ResponseEntity.ok().body(obj);
+	}
 	
 	@RequestMapping(value="{id}", method = RequestMethod.GET) // INFORMA QUAL MÉTODO DE REQUISIÇÃO
 	// ResponseEntity encapsula as respostas necessárias para um serviço rest
