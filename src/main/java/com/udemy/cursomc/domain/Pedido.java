@@ -1,28 +1,33 @@
 package com.udemy.cursomc.domain;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
-public class Endereco implements Serializable{
+public class Pedido implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
-	private String logradouro;
-	private String numero;
-	private String complemento;
-	private String bairro;
-	private String cep;
+	private LocalDateTime instante;
+	
+	@JsonManagedReference
+	@OneToOne(cascade = CascadeType.ALL, mappedBy = "pedido")
+//	@JoinColumn(name = "pagamento_id")
+	private Pagamento pagamento;
 	
 	@JsonBackReference
 	@ManyToOne
@@ -30,22 +35,17 @@ public class Endereco implements Serializable{
 	private Cliente cliente;
 	
 	@ManyToOne
-	@JoinColumn(name = "cidade_id")
-	private Cidade cidade;
+	@JoinColumn(name = "endereco_de_entrega_id")
+	private Endereco enderecoDeEntrega;
 	
-	public Endereco() {}
+	public Pedido() {}
 
-	public Endereco(Integer id, String logradouro, String numero, String complemento, String bairro, String cep,
-			Cliente cliente, Cidade cidade) {
+	public Pedido(Integer id, LocalDateTime instante, Cliente cliente, Endereco enderecoDeEntrega) {
 		super();
 		this.id = id;
-		this.logradouro = logradouro;
-		this.numero = numero;
-		this.complemento = complemento;
-		this.bairro = bairro;
-		this.cep = cep;
+		this.instante = instante;
 		this.cliente = cliente;
-		this.setCidade(cidade);
+		this.enderecoDeEntrega = enderecoDeEntrega;
 	}
 
 	public Integer getId() {
@@ -54,35 +54,17 @@ public class Endereco implements Serializable{
 	public void setId(Integer id) {
 		this.id = id;
 	}
-	public String getLogradouro() {
-		return logradouro;
+	public LocalDateTime getInstante() {
+		return instante;
 	}
-	public void setLogradouro(String logradouro) {
-		this.logradouro = logradouro;
+	public void setInstante(LocalDateTime instante) {
+		this.instante = instante;
 	}
-	public String getNumero() {
-		return numero;
+	public Pagamento getPagamento() {
+		return pagamento;
 	}
-	public void setNumero(String numero) {
-		this.numero = numero;
-	}
-	public String getComplemento() {
-		return complemento;
-	}
-	public void setComplemento(String complemento) {
-		this.complemento = complemento;
-	}
-	public String getBairro() {
-		return bairro;
-	}
-	public void setBairro(String bairro) {
-		this.bairro = bairro;
-	}
-	public String getCep() {
-		return cep;
-	}
-	public void setCep(String cep) {
-		this.cep = cep;
+	public void setPagamento(Pagamento pagamento) {
+		this.pagamento = pagamento;
 	}
 	public Cliente getCliente() {
 		return cliente;
@@ -90,11 +72,11 @@ public class Endereco implements Serializable{
 	public void setCliente(Cliente cliente) {
 		this.cliente = cliente;
 	}
-	public Cidade getCidade() {
-		return cidade;
+	public Endereco getEnderecoDeEntrega() {
+		return enderecoDeEntrega;
 	}
-	public void setCidade(Cidade cidade) {
-		this.cidade = cidade;
+	public void setEnderecoDeEntrega(Endereco enderecoDeEntrega) {
+		this.enderecoDeEntrega = enderecoDeEntrega;
 	}
 
 	@Override
@@ -113,7 +95,7 @@ public class Endereco implements Serializable{
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Endereco other = (Endereco) obj;
+		Pedido other = (Pedido) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;
