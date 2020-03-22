@@ -9,25 +9,25 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.udemy.cursomc.domain.Cliente;
-import com.udemy.cursomc.services.ClienteService;
+import com.udemy.cursomc.domain.Pedido;
+import com.udemy.cursomc.services.PedidoService;
 
 @RestController
-@RequestMapping(value = "/clientes")
-public class ClienteResource {
+@RequestMapping(value = "/pedidos")
+public class PedidoResource {
 
 	@Autowired
-	private ClienteService service;
+	private PedidoService service;
 	
 	@RequestMapping(method = RequestMethod.GET)
 	public ResponseEntity<?> find(){
-		List<Cliente> obj = service.find();
-		return ResponseEntity.ok().body(obj);		
+		List<Pedido> obj = service.find();
+		return ResponseEntity.ok().body(obj);
 	}
 	
-	@RequestMapping(value = "{id}", method = RequestMethod.GET)
+	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	public ResponseEntity<?> find(@PathVariable Integer id){
-		Cliente obj = service.find(id);
-		return ResponseEntity.ok().body(obj);		
+		Pedido pedido = service.find(id);
+		return ResponseEntity.ok().body(pedido);
 	}
 }
