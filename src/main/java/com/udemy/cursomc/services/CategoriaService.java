@@ -4,10 +4,12 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import com.udemy.cursomc.domain.Categoria;
 import com.udemy.cursomc.repositories.CategoriaRepository;
+import com.udemy.cursomc.services.exceptions.DataIntegrityException;
 import com.udemy.cursomc.services.exceptions.ObjectNotFoundException;
 
 @Service
@@ -37,5 +39,14 @@ public class CategoriaService {
 		/* Método save serve tanto pra inserir quanto pra atualizar, pois se o ID estiver null, ele entende como um novo recurso,
 		 * caso contrário ele apenas sobrescreve o elemento com id que foi passado com os novos dados  
 		 */
+	}
+
+	public void delete(Integer id) {
+		find(id);
+		try {
+			repo.deleteById(id);
+		}catch(DataIntegrityViolationException e) {
+			throw new DataIntegrityException("Não é possível excluir a categoria com id " + id + " pois existem produtos associados à ela.");
+		}
 	}
 }
