@@ -24,7 +24,7 @@ public class CategoriaService {
 				() -> new ObjectNotFoundException("Objeto não encontrado! Id: " + id + "Tipo: " + Categoria.class.getName()));
 	}
 
-	public List<Categoria> find() {
+	public List<Categoria> findAll() {
 		return repo.findAll();
 	}
 

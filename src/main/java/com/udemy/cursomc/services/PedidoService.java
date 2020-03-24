@@ -20,7 +20,7 @@ public class PedidoService {
 			.orElseThrow(() -> new ObjectNotFoundException("Pedido com id: " + id + " não encontrado!"));
 	}
 
-	public List<Pedido> find() {
+	public List<Pedido> findAll() {
 		return pedidoRepository.findAll();
 	}
 }

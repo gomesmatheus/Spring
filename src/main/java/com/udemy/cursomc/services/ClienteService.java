@@ -20,7 +20,7 @@ public class ClienteService {
 			.orElseThrow(() -> new ObjectNotFoundException("Cliente com id: " + id + " não encontrado!"));
 	}
 
-	public List<Cliente> find() {
+	public List<Cliente> findAll() {
 		return clienteRepository.findAll();
 	}
 }
