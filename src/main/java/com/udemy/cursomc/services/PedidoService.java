@@ -23,4 +23,8 @@ public class PedidoService {
 	public List<Pedido> findAll() {
 		return pedidoRepository.findAll();
 	}
+	
+	public Pedido insert(Pedido obj) {
+		return null;
+	}
 }
