@@ -1,9 +1,7 @@
 package com.udemy.cursomc.services;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Set;
 
 import javax.transaction.Transactional;
 
@@ -12,7 +10,6 @@ import org.springframework.stereotype.Service;
 
 import com.udemy.cursomc.domain.ItemPedido;
 import com.udemy.cursomc.domain.PagamentoComBoleto;
-import com.udemy.cursomc.domain.PagamentoComCartao;
 import com.udemy.cursomc.domain.Pedido;
 import com.udemy.cursomc.domain.enums.EstadoPagamento;
 import com.udemy.cursomc.repositories.ItemPedidoRepository;
